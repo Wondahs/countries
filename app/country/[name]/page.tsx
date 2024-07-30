@@ -11,15 +11,23 @@ import { useFetchData } from "@/app/lib/fetchData";
 const Page = () => {
     const { data, isLoading, error } = useFetchData('/api/countries');
     const { name }: {name: string} = useParams();
-    
-    if (!data) return (
+    let country;
+    const param: SearchParams = { name }
+
+    if (!data) {
+        return (
         <p>Data Not Found</p>
-    );
+    );} else {
+        country = findCountry(param, data);
+        if (!country) {
+            return (
+                <p>Country Data Not Found</p>
+            );
+        }
+    }
 
 
     console.log(data);
-    const param: SearchParams = { name }
-    const country = findCountry(param, data);
     return (
         <>
             {!isLoading && country ? <CountryDetails data={country} /> : <h1>Country Not Found</h1>}
