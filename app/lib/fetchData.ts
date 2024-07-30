@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import fs from 'fs/promises';
+import { CountryData } from "./typeDef";
 // import {GetStaticProps} from 'next';
 
-export const useFetchData = async (url: string) => {
-    const [data, setData] = useState(null);
-    const [error, setError] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
+export const useFetchData = (url: string) => {
+    const [data, setData] = useState<CountryData[] | any>(null);
+    const [error, setError] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         async function fetchData(url: string) {
+            setIsLoading(true);
             try {
                 let parsedResponse = null;
                 const response = await fetch(url);
@@ -16,7 +17,7 @@ export const useFetchData = async (url: string) => {
                     setError(true);
                     setData(null);
                     setIsLoading(false);
-                    throw new Error("Could Not Fetch Data");
+                    return;
                 }
                 parsedResponse = await response.json()
                 if (parsedResponse) {

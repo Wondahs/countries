@@ -12,16 +12,16 @@ export default function Home() {
   const [searchData, setSearchData] = useState({});
 
   return (
-    <main>
-      <div>
+    <main className="flex flex-col">
+      <div className="flex flex-col px-8 mt-6">
         <SearchBar setSearchData={setSearchData} />
         <Filter setSearchData={setSearchData} />
       </div>
-      <ul>
+      <div className="px-8 flex flex-col items-center">
         {data && data.map((country: CountryData, index: any) => (
           <CountryCard key={index} data={country} />
         ))}
-      </ul>
+      </div>
     </main>
   );
 }
