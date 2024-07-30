@@ -53,3 +53,8 @@ export interface CountryData {
   cioc?: string;  // Made optional
   independent: boolean;
 }
+
+export interface SearchParams {
+  name?: string;
+  region?: string
+}

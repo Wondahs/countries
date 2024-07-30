@@ -5,8 +5,8 @@ const Flag = ({ source }: {source: string}) => {
         <Image
             src={source}
             alt="Country Flag"
-            width={300}
-            height={400}
+            width={400}
+            height={500}
         />
      );
 }
