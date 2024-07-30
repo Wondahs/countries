@@ -1,6 +1,6 @@
 import { CountryData, SearchParams } from "./typeDef";
 
-export const findCountry = (param: SearchParams, data: CountryData[]): CountryData | CountryData[] | undefined => {
+export const findCountry = (param: SearchParams, data: CountryData[]) => {
     if (param.name) {
         return data.find((country: CountryData) =>
             country.name.toLowerCase().includes(param.name.toLowerCase())
