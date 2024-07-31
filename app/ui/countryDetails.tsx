@@ -26,8 +26,8 @@ const CountryDetails = ({ data }: { data: CountryData }) => {
                 <div className="mb-5">
                     <p>
                         <span className="font-bold">Border Countries:</span>
-                        <span>{data.borders && data.borders.map((item, index) => (
-                            <span className="bg-[#2B3743] py-3 mx-2 px-6 rounded" key={index}>{item}</span>
+                        <span className="flex flex-wrap">{data.borders && data.borders.map((item, index) => (
+                            <span className="bg-[#2B3743] py-3 mx-2 my-1 px-6 rounded" key={index}>{item}</span>
                         ))}
                         </span>
                     </p>
