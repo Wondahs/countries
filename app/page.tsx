@@ -17,11 +17,11 @@ export default function Home() {
 
   const searchByName = (obj: CountryData) => {
     const searchParam: SearchParams = {
-      name: obj.name,
+      alpha3Code: obj.alpha3Code,
     }
     const country = findCountry(searchParam, data);
     if (country) {
-      router.push('/countries/')
+      router.push('/country/' + obj.alpha3Code)
     }
   }
 

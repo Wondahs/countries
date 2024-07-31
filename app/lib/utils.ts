@@ -1,9 +1,9 @@
 import { CountryData, SearchParams } from "./typeDef";
 
 export const findCountry = (param: SearchParams, data: CountryData[]) => {
-    if (param.name) {
+    if (param.alpha3Code) {
         return data.find((country: CountryData) =>
-            country.name.toLowerCase().includes(param.name.toLowerCase())
+            country.alpha3Code.toLowerCase().includes(param.alpha3Code.toLowerCase())
         );
     }
     if (param.region) {

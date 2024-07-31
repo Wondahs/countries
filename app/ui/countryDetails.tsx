@@ -3,19 +3,35 @@ import Flag from "./flag";
 
 const CountryDetails = ({ data }: { data: CountryData }) => {
     return (
-        <section>
-            <Flag source={data.flag} />
+        <section className="my-5">
+            <Flag width={500} height={700} source={data.flag} />
             <div>
-                <h1>{data.name}</h1>
-                <p>Native Name: {data.nativeName}</p>
-                <p>Population: {data.population}</p>
-                <p>Region: {data.region}</p>
-                <p>Sub Region: {data.subregion}</p>
-                <p>Capital: {data.capital}</p>
-                <p>Top Level Domain: {data.topLevelDomain}</p>
-                <p>Currencies: {data.currencies.join(',')}</p>
-                <p>Languages: {data.languages.join(',')}</p>
-                <p>Border Countries: {data.borders.join(',')}</p>
+                <h1 className="my-9 font-bold text-xl">{data.name}</h1>
+                <div className="mb-5">
+                    <p><span className="font-bold">Native Name:</span> {data.nativeName}</p>
+                    <p><span className="font-bold">Population:</span> {data.population}</p>
+                    <p><span className="font-bold">Region:</span> {data.region}</p>
+                    <p><span className="font-bold">Sub Region:</span> {data.subregion}</p>
+                    <p><span className="font-bold">Capital:</span> {data.capital}</p>
+                </div>
+                <div className="mb-5">
+                    <p><span className="font-bold">Top Level Domain:</span> {data.topLevelDomain}</p>
+                    <p><span className="font-bold">Currencies:</span> {data.currencies.map((obj, index) => (
+                        <span key={index}>{obj.code} | Symbol: {obj.symbol}</span>
+                    ))}</p>
+                    <p><span className="font-bold">Languages:</span> {data.languages.map((obj) => (
+                        <span className="mr-2" key={obj.iso639_1}>{obj.name} |</span>
+                    ))}</p>
+                </div>
+                <div className="mb-5">
+                    <p>
+                        <span className="font-bold">Border Countries:</span>
+                        <span>{data.borders && data.borders.map((item, index) => (
+                            <span className="bg-[#2B3743] py-3 mx-2 px-6 rounded" key={index}>{item}</span>
+                        ))}
+                        </span>
+                    </p>
+                </div>
             </div>
         </section>
     );
