@@ -31,7 +31,7 @@ export default function Home() {
         <SearchBar setSearchData={setSearchData} />
         <Filter setSearchData={setSearchData} />
       </div>
-      <div className="px-8 flex flex-col items-center">
+      <div className="px-8 flex flex-col flex-wrap items-center md:flex-row md:justify-between">
         {data && data.map((country: CountryData, index: any) => (
           <div key={index} onClick={() => searchByName(country)}>
             <CountryCard data={country} />
