@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Footer = () => {
     return (
-        <div className="bg-[#2B3743] py-3 mt-10 text-center">
+        <div className="fixed bottom-0 bg-[#2B3743] py-3 mt-10 text-center">
             <p className="font-thin text-xs">Built with NextJs</p>
             <p className="text-xs">by</p>
             <div className="flex flex-col">
