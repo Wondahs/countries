@@ -17,10 +17,10 @@ const CountryDetails = ({ data }: { data: CountryData }) => {
                     </div>
                     <div className="mb-5">
                         <p><span className="font-bold">Top Level Domain:</span> {data.topLevelDomain}</p>
-                        <p><span className="font-bold">Currencies:</span> {data.currencies.map((obj, index) => (
+                        <p><span className="font-bold">Currencies:</span> {data.currencies && data.currencies.map((obj, index) => (
                             <span key={index}>{obj.code} | Symbol: {obj.symbol}</span>
                         ))}</p>
-                        <p><span className="font-bold">Languages:</span> {data.languages.map((obj) => (
+                        <p><span className="font-bold">Languages:</span> {data.languages && data.languages.map((obj) => (
                             <span className="mr-2" key={obj.iso639_1}>{obj.name} |</span>
                         ))}</p>
                     </div>
