@@ -10,7 +10,6 @@ import { dotWave } from "ldrs";
 import { useModeStore, usePageData } from "./store";
 import clsx from "clsx";
 
-dotWave.register();
 
 const ITEMS_PER_PAGE = 21;
 
@@ -38,7 +37,7 @@ export default function Home() {
     } else {
       setFilteredData(data)
     }
-    
+    dotWave.register();
   }, [data, query, filterQuery]);
 
   setPageData(data);
