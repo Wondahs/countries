@@ -2,24 +2,29 @@
 
 import { useEffect, useState, useCallback } from "react";
 import CountryCard from "./ui/countryCard";
-import SearchBar from "./ui/searchBar";
 import { CountryData, SearchParams } from "./lib/typeDef";
-import Filter from "./ui/filter";
 import { useFetchData } from "./lib/fetchData";
-import { useRouter } from "next/navigation";
 import { findCountry } from "./lib/utils";
 import Link from "next/link";
-import _ from 'lodash';
 import { dotWave } from "ldrs";
+import { useModeStore, usePageData } from "./store";
+import clsx from "clsx";
 
 dotWave.register();
+
+const ITEMS_PER_PAGE = 21;
 
 export default function Home() {
   const { data, isLoading, error } = useFetchData('/api/countries');
   const [filterQuery, setFilterQuery] = useState('');
   const [filteredData, setFilteredData] = useState(data);
   const [query, setQuery] = useState('');
-  const router = useRouter();
+  const nightMode = useModeStore((state) => state.nightMode);
+  const setPageData = usePageData((state) => state.setPagedata);
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [paginatedData, setPaginatedData] = useState<CountryData[]>([]);
 
   useEffect(() => {
     if (query) {
@@ -33,30 +38,56 @@ export default function Home() {
     } else {
       setFilteredData(data)
     }
+    
   }, [data, query, filterQuery]);
 
+  setPageData(data);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    setPaginatedData(filteredData?.slice(startIndex, endIndex) || []);
+  }, [filteredData, currentPage]);
 
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    handleSearch(event.target.value);
+    setQuery(event.target.value);
+    setCurrentPage(1); // Reset to first page on new search
   }
-
-  const handleSearch = useCallback(_.debounce((value) => {
-    setQuery(value);
-  }, 1000), []);
 
   const filterHandler = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    filterSearch(event.target.value);
+    setFilterQuery(event.target.value);
+    setCurrentPage(1); // Reset to first page on new filter
   }
 
-  const filterSearch = useCallback(_.debounce((value) => {
-    setFilterQuery(value);
-  }, 1000), []);
+  const nextPage = () => {
+    if (currentPage < Math.ceil((filteredData?.length || 0) / ITEMS_PER_PAGE)) {
+      setCurrentPage(currentPage + 1);
+      scrollToTop();
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      scrollToTop();
+    }
+  };
 
   return (
     <main className="flex flex-col">
       <div className="flex flex-col px-8 mt-6">
         <input
-          className="mb-5 w-[100%] py-3 px-0 rounded-md bg-[#2B3743] text-center text-sm"
+          className={clsx("mb-5 w-[100%] py-3 px-0 rounded-md bg-[#2B3743] text-center text-sm", {
+            'bg-[#2B3743] text-white': nightMode,
+            'bg-white text-[#2B3743] shadow-lg border-2': !nightMode
+          })}
           type='text'
           value={query}
           onChange={searchHandler}
@@ -66,7 +97,10 @@ export default function Home() {
         <select
           value={filterQuery}
           onChange={filterHandler}
-          className="mb-5 w-[100%] py-3 px-0 rounded-md bg-[#2B3743] text-center text-sm"
+          className={clsx("mb-5 w-[100%] py-3 px-0 rounded-md bg-[#2B3743] text-center text-sm", {
+            'bg-[#2B3743] text-white': nightMode,
+            'bg-white text-[#2B3743] shadow-lg border-2': !nightMode,
+          })}
         >
           <option value="">Filter by Region</option>
           <option value="africa">Africa</option>
@@ -76,14 +110,38 @@ export default function Home() {
           <option value="oceania">Oceania</option>
         </select>
       </div>
-      {isLoading && <div className="m-auto"><l-dot-wave size={100} speed={3} color={'white'} ></l-dot-wave></div>}
+      {isLoading && <div className="m-auto"><l-dot-wave size={100} speed={3} color={nightMode ? 'white' : '#212E37'} ></l-dot-wave></div>}
       {error && <p>Error: Loading</p>}
-      <div className="px-8 mb-5 flex flex-col flex-wrap items-center md:flex-row md:justify-between">
-        {filteredData ? filteredData.map((country: CountryData, index: any) => (
+      <div className="px-8 mb-5 flex flex-col flex-wrap items-center md:flex-row md:justify-around">
+        {paginatedData.length > 0 ? paginatedData.map((country: CountryData, index: any) => (
           <Link href={'/country/' + country.alpha3Code} key={index} >
             <CountryCard data={country} />
           </Link>
-        )) : <p>No Country Found</p>}
+        )) : <p className="text-center m-auto">{!isLoading && "No Country Found"}</p>}
+      </div>
+      <div className="flex justify-center space-x-4 mb-8">
+        <button
+          onClick={prevPage}
+          disabled={currentPage === 1}
+          className={clsx("px-4 py-2 rounded", {
+            'bg-[#2B3743] text-white': nightMode,
+            'bg-white text-[#2B3743] shadow-lg': !nightMode,
+            'opacity-50 cursor-not-allowed': currentPage === 1
+          })}
+        >
+          Previous
+        </button>
+        <button
+          onClick={nextPage}
+          disabled={currentPage === Math.ceil((filteredData?.length || 0) / ITEMS_PER_PAGE)}
+          className={clsx("px-4 py-2 rounded", {
+            'bg-[#2B3743] text-white': nightMode,
+            'bg-white text-[#2B3743] shadow-lg': !nightMode,
+            'opacity-50 cursor-not-allowed': currentPage === Math.ceil((filteredData?.length || 0) / ITEMS_PER_PAGE)
+          })}
+        >
+          Next
+        </button>
       </div>
     </main>
   );

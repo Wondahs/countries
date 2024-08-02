@@ -8,8 +8,8 @@ export async function GET() {
         const filePath = path.join(process.cwd(), 'app/lib', 'data.json');
         const data = await readFile(filePath, 'utf8');
         const parsedData = JSON.parse(data);
-        return NextResponse.json(parsedData, {status: 200});
+        return NextResponse.json(parsedData, { status: 200 });
     } catch (error) {
-        return NextResponse.json({ error }, {status: 500});
+        return NextResponse.json({ error }, { status: 500 });
     }
 }
