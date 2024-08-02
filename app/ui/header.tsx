@@ -17,11 +17,9 @@ const Header = ({ nightMode, setNightMode }: { nightMode: boolean, setNightMode:
                 {nightMode ? (
                     <>
                         <DarkMode className="mr-1" />
-                        <span>Toggle Light Mode</span>
                     </>) : (
                     <>
                         <LightMode className="mr-1" />
-                        <span>Toggle Dark Mode</span>
                     </>)}
             </button>
         </div>
