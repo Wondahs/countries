@@ -81,9 +81,9 @@ export default function Home() {
 
   return (
     <main className="flex flex-col">
-      <div className="flex flex-col px-8 mt-6">
+      <div className="flex flex-col px-8 mt-6 md:flex-row md:w-[100%]">
         <input
-          className={clsx("mb-5 w-[100%] py-3 px-0 rounded-md bg-[#2B3743] text-center text-sm", {
+          className={clsx("mb-5 w-[100%] md:w-[25%] md:mr-auto py-3 px-0 rounded-md text-center text-sm", {
             'bg-[#2B3743] text-white': nightMode,
             'bg-white text-[#2B3743] shadow-lg border-2': !nightMode
           })}
@@ -94,9 +94,10 @@ export default function Home() {
         />
 
         <select
+          id="region"
           value={filterQuery}
           onChange={filterHandler}
-          className={clsx("mb-5 w-[100%] py-3 px-0 rounded-md bg-[#2B3743] text-center text-sm", {
+          className={clsx("mb-5 w-[100%] md:w-[25%] py-3 px-0 rounded-md bg-[#2B3743] text-center text-sm", {
             'bg-[#2B3743] text-white': nightMode,
             'bg-white text-[#2B3743] shadow-lg border-2': !nightMode,
           })}

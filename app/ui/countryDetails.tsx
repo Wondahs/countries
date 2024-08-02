@@ -8,7 +8,7 @@ const CountryDetails = ({ data }: { data: CountryData }) => {
     return (
         <section className="flex flex-col my-5 md:flex-row md:justify-around">
             <div className="w-[40%]">
-                <Flag width={500} height={700} source={data.flag} />
+                <Flag width={350} height={450} source={data.flag} />
             </div>
             <div>
                 <h1 className="my-9 font-bold text-xl md:text-3xl">{data.name}</h1>

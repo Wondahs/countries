@@ -13,7 +13,7 @@ interface PageData {
 
 export const useModeStore = create<Mode>((set) => (
     {
-        nightMode: true,
+        nightMode: false,
         setNightMode: (value: boolean) => set({ nightMode: value }),
     })
 );

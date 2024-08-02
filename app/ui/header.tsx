@@ -12,7 +12,7 @@ const Header = ({ nightMode, setNightMode }: { nightMode: boolean, setNightMode:
             'bg-[#2B3743] text-white' : nightMode,
             'bg-white text-[#2B3743]' :!nightMode,
         })}>
-            <h1 className="font-black mr-auto">Where in the world?</h1>
+            <div className="mr-auto"><h1 className="font-black">Where in the world?</h1></div>
             <button onClick={setMode} className="flex flex-row items-center">
                 {nightMode ? (
                     <>
