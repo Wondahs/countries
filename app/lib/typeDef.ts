@@ -55,6 +55,7 @@ export interface CountryData {
 }
 
 export interface SearchParams {
+  name?: string;
   alpha3Code?: string;
   region?: string
 }

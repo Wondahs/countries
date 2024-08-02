@@ -1,15 +1,31 @@
 import { DarkMode } from "@/app/ui/icons/darkMode";
+import { LightMode } from "./icons/lightMode";
+import { clsx } from "clsx";
 
-const Header = () => {
+const Header = ({ nightMode, setNightMode }: { nightMode: boolean, setNightMode: Function }) => {
+
+    const setMode = () => {
+        setNightMode(!nightMode);
+    }
     return (
-        <div className="bg-[#2B3743] border-0 shadow-xl flex flex-row py-5 px-8 items-center">
+        <div className={clsx(" border-0 shadow-xl flex flex-row py-5 px-8 items-center", {
+            'bg-[#2B3743] text-white' : nightMode,
+            'bg-white text-[#2B3743]' :!nightMode,
+        })}>
             <h1 className="font-black mr-auto">Where in the world?</h1>
-            <button className="flex flex-row items-center">
-                <DarkMode className="mr-1"/>
-                <span>Dark Mode</span>
+            <button onClick={setMode} className="flex flex-row items-center">
+                {nightMode ? (
+                    <>
+                        <DarkMode className="mr-1" />
+                        <span>Toggle Light Mode</span>
+                    </>) : (
+                    <>
+                        <LightMode className="mr-1" />
+                        <span>Toggle Dark Mode</span>
+                    </>)}
             </button>
         </div>
-     );
+    );
 }
- 
+
 export default Header;
