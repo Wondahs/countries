@@ -112,6 +112,7 @@ export default function Home() {
       </div>
       {isLoading && <div className="m-auto"><l-dot-wave size={100} speed={3} color={nightMode ? 'white' : '#212E37'} ></l-dot-wave></div>}
       {error && <p>Error: Loading</p>}
+      <p className="font-light text-center">Click a country card to see more details about the country</p>
       <div className="px-8 mb-5 flex flex-col flex-wrap items-center md:flex-row md:justify-around">
         {paginatedData.length > 0 ? paginatedData.map((country: CountryData, index: any) => (
           <Link href={'/country/' + country.alpha3Code} key={index} >
