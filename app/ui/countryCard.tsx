@@ -6,7 +6,7 @@ import clsx from "clsx";
 const CountryCard = ({ data }: { data: CountryData }) => {
     const nightMode = useModeStore((state) => state.nightMode);
     return (
-        <div className={clsx("flex flex-col mb-2 mx-5 h-auto hover:scale-105 transition-all ease cursor-pointer rounded-lg shadow-xl my-4", {
+        <div className={clsx("flex flex-col mb-2 mx-5 h-auto hover:scale-105 transition-all ease cursor-pointer rounded-lg shadow my-4", {
             'bg-[#2B3743] text-white' : nightMode,
             'bg-white text-[#2B3743]' :!nightMode,
         })}>

@@ -27,7 +27,7 @@ export default function Home() {
 
   useEffect(() => {
     if (query) {
-      const obj: SearchParams = { name: query }
+      const obj: SearchParams = { name: query.trim() }
       const country = findCountry(obj, data);
       if (country) setFilteredData(country);
     } else if (filterQuery) {
@@ -85,7 +85,7 @@ export default function Home() {
         <input
           className={clsx("mb-5 w-[100%] md:w-[25%] md:mr-auto py-3 px-0 rounded-md text-center text-sm", {
             'bg-[#2B3743] text-white': nightMode,
-            'bg-white text-[#2B3743] shadow-lg border-2': !nightMode
+            'bg-white text-[#2B3743] shadow border': !nightMode
           })}
           type='text'
           value={query}
@@ -99,7 +99,7 @@ export default function Home() {
           onChange={filterHandler}
           className={clsx("mb-5 w-[100%] md:w-[25%] py-3 px-0 rounded-md bg-[#2B3743] text-center text-sm", {
             'bg-[#2B3743] text-white': nightMode,
-            'bg-white text-[#2B3743] shadow-lg border-2': !nightMode,
+            'bg-white text-[#2B3743] shadow border': !nightMode,
           })}
         >
           <option value="">Filter by Region</option>
@@ -112,7 +112,7 @@ export default function Home() {
       </div>
       {isLoading && <div className="m-auto"><l-dot-wave size={100} speed={3} color={nightMode ? 'white' : '#212E37'} ></l-dot-wave></div>}
       {error && <p>Error: Loading</p>}
-      <p className="font-light text-center">Click a country card to see more details about the country</p>
+      <p className="px-8 font-light text-center">Click a country card to see more details about the country</p>
       <div className="px-8 mb-5 flex flex-col flex-wrap items-center md:flex-row md:justify-around">
         {paginatedData.length > 0 ? paginatedData.map((country: CountryData, index: any) => (
           <Link href={'/country/' + country.alpha3Code} key={index} >
@@ -126,7 +126,7 @@ export default function Home() {
           disabled={currentPage === 1}
           className={clsx("px-4 py-2 rounded", {
             'bg-[#2B3743] text-white': nightMode,
-            'bg-white text-[#2B3743] shadow-lg': !nightMode,
+            'bg-white text-[#2B3743] shadow-md': !nightMode,
             'opacity-50 cursor-not-allowed': currentPage === 1
           })}
         >
@@ -137,7 +137,7 @@ export default function Home() {
           disabled={currentPage === Math.ceil((filteredData?.length || 0) / ITEMS_PER_PAGE)}
           className={clsx("px-4 py-2 rounded", {
             'bg-[#2B3743] text-white': nightMode,
-            'bg-white text-[#2B3743] shadow-lg': !nightMode,
+            'bg-white text-[#2B3743] shadow': !nightMode,
             'opacity-50 cursor-not-allowed': currentPage === Math.ceil((filteredData?.length || 0) / ITEMS_PER_PAGE)
           })}
         >

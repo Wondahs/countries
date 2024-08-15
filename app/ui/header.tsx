@@ -8,7 +8,7 @@ const Header = ({ nightMode, setNightMode }: { nightMode: boolean, setNightMode:
         setNightMode(!nightMode);
     }
     return (
-        <div className={clsx(" border-0 shadow-xl flex flex-row py-5 px-8 items-center", {
+        <div className={clsx(" border-0 shadow flex flex-row py-5 px-8 items-center", {
             'bg-[#2B3743] text-white' : nightMode,
             'bg-white text-[#2B3743]' :!nightMode,
         })}>
